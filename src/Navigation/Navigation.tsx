@@ -7,6 +7,7 @@ import { LoginScreen } from '../Screens/LoginScreen';
 import { RegisterScreen } from '../Screens/RegisterScreen';
 import { ProtectedScreen } from '../Screens/ProtectedScreen';
 import { LoadingScreen } from '../Screens/LoadingScreen';
+import { ProductsNavigator } from './ProductsNavigator';
 
 const Stack = createStackNavigator();
 export const Navigation = () => {
@@ -33,7 +34,11 @@ export const Navigation = () => {
              </>
            )
            : (
-           <Stack.Screen name="Protected" component={ProtectedScreen} />
+             <>
+
+              <Stack.Screen name="ProductsNavigator" component={ProductsNavigator} />
+              <Stack.Screen name="Protected" component={ProtectedScreen} />
+             </>
            )
         }
       </Stack.Navigator>

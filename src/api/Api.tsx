@@ -4,11 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseURL = 'http://192.168.0.113:8080/api'
 
-const cafeApi = axios.create({
+const Api = axios.create({
     baseURL
 })
 
-cafeApi.interceptors.request.use(
+Api.interceptors.request.use(
     async (config) => {
         const token = await AsyncStorage.getItem('token');
         if(token) {
@@ -20,4 +20,4 @@ cafeApi.interceptors.request.use(
 )
 
 
-export default cafeApi;
+export default Api;

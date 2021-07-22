@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useReducer} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import cafeApi from '../api/cafeApi';
+import Api from '../api/Api';
 import { Usuario, LoginResponse, LoginData, RegisterData } from '../interfaces/appInterface';
 import { authReducer, AuthState } from './authReducer';
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({children}: any) => {
         if(!token) return dispatch({type: 'notAuthenticated'})
 
         //hay token !validar
-        const resp = await cafeApi.get('/auth');
+        const resp = await Api.get('/auth');
         if(resp.data !== 200) {
             return dispatch({type: 'notAuthenticated'})
         }
@@ -55,7 +55,7 @@ export const AuthProvider = ({children}: any) => {
 
     const signIn = async ({correo,password}: LoginData) => {
         try {
-            const resp = await cafeApi.post<LoginResponse>('/auth/login',{correo, password})
+            const resp = await Api.post<LoginResponse>('/auth/login',{correo, password})
             dispatch({type: 'signUp', payload: {token:resp.data.token, user: resp.data.usuario}})
 
             await AsyncStorage.setItem('token', resp.data.token)
@@ -65,7 +65,7 @@ export const AuthProvider = ({children}: any) => {
     };
     const signUp = async ({correo, password, nombre} : RegisterData) => {
        try {
-            const {data} = await cafeApi.post<LoginResponse>('/usuarios',{correo, password, nombre})
+            const {data} = await Api.post<LoginResponse>('/usuarios',{correo, password, nombre})
             dispatch({type: 'signUp', payload: {token:data.token, user: data.usuario}})
 
             await AsyncStorage.setItem('token', data.token)
